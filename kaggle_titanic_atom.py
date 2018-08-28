@@ -1,7 +1,4 @@
-# %%
-print('Hello')
 
-#%%
 import numpy as np
 import pandas as pd
 
@@ -62,9 +59,13 @@ rfc.fit(X_train, y_train)
 from sklearn.metrics import accuracy_score
 print('Training accuracy: ', accuracy_score(y_train, rfc.predict(X_train)))
 print('Validation accuracy: ', accuracy_score(y_test, rfc.predict(X_test)))
+
+# Predicting for Test Dataset
 prediciton = rfc.predict(test)
 test['Survived'] = prediciton
 test.head()
+
+# Creating file for Submission
 test = test[['PassengerId', 'Survived']]
 test.head()
 test.to_csv('atom_res.csv', index=False)
