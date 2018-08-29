@@ -26,12 +26,15 @@ train.info()
 
 # Filling the missing values of Age column with its mean.
 train_mean = train[['Age']].mean()
-train[['Age']] = train[['Age']].fillna(train_mean)
+train['Age'] = train['Age'].fillna(train_mean)
 train.info()
 
 # Doing the same with Test Datasets
-test_mean = test[['Age']].mean()
-test[['Age']] = test[['Age']].fillna(test_mean)
+test_mean = test['Age'].mean()
+test['Age'] = test['Age'].fillna(test_mean)
+test.isnull().any()
+
+test['Fare'] = test['Fare'].fillna(test['Fare'].mean())
 test.info()
 
 # Converting Sex from catergorical to numerical
@@ -41,7 +44,16 @@ train.head()
 test['Sex'] = test['Sex'].apply(lambda x: 1 if x == 'male' else 0)
 test.head()
 
-#train['Embarked'].unique()
+
+# Feature Engineering: Splitting Pclass in 1st class, 2nd Class, and 3rd Class
+def class_sep(data):
+    print(data.values())
+
+class_sep(train['Sex'])
+train['1st'] = train['1st']
+
+import matplotlib.pyplot as plt
+plt.hist(data, bins=50)
 
 # Splitting the Train Datasets
 X = train.drop('Survived', axis=1)
