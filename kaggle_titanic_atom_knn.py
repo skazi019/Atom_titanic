@@ -81,17 +81,17 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
 
 # Training the Dataset using RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
-dt = DecisionTreeClassifier()
-dt.fit(X_train, y_train)
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier()
+knn.fit(X_train, y_train)
 
 # Checking the Accuracy Score of the Model
 from sklearn.metrics import accuracy_score
-print('Training accuracy: ', accuracy_score(y_train, dt.predict(X_train)))
-print('Validation accuracy: ', accuracy_score(y_test, dt.predict(X_test)))
+print('Training accuracy: ', accuracy_score(y_train, knn.predict(X_train)))
+print('Validation accuracy: ', accuracy_score(y_test, knn.predict(X_test)))
 
 # Predicting for Test Dataset
-prediciton = dt.predict(test)
+prediciton = knn.predict(test)
 test['Survived'] = prediciton
 test.head()
 
@@ -99,4 +99,3 @@ test.head()
 test = test[['PassengerId', 'Survived']]
 test.head()
 test.to_csv('atom_res.csv', index=False)
-    
