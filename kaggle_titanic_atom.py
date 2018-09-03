@@ -14,10 +14,10 @@ train.shape
 test.shape
 
 # Selecting columns that will be used in Predicting.
-train = train[['PassengerId', 'Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare']]
+train = train[['PassengerId', 'Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
 train.head()
 
-test = test[['PassengerId', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare']]
+test = test[['PassengerId', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
 test.head()
 
 # Checking the Datasets for missing values.
@@ -43,6 +43,21 @@ train.head()
 test['Sex'] = test['Sex'].apply(lambda x: 1 if x == 'male' else 0)
 test.head()
 
+train['Embarked'].unique()
+train['Embarked'].isnull().value_counts()
+train['Embarked'] = train['Embarked'].fillna('S')
+train['Embarked'].isnull().value_counts()
+train['Embarked_S'] = train['Embarked'].apply(lambda x: 1 if x == 'S' else 0)
+train['Embarked_C'] = train['Embarked'].apply(lambda x: 1 if x == 'C' else 0)
+train['Embarked_Q'] = train['Embarked'].apply(lambda x: 1 if x == 'Q' else 0)
+train.drop('Embarked', axis=1, inplace=True)
+train.head()
+
+test['Embarked_C'] = test['Embarked'].apply(lambda x: 1 if x == 'C' else 0)
+test['Embarked_S'] = test['Embarked'].apply(lambda x: 1 if x == 'S' else 0)
+test['Embarked_Q'] = test['Embarked'].apply(lambda x: 1 if x == 'Q' else 0)
+test.drop('Embarked', axis=1, inplace=True)
+test.head()
 
 # Feature Engineering: Splitting Pclass in 1st class, 2nd Class, and 3rd Class
 train['first_class'] = train['Pclass'].apply(lambda x : 1 if x == 1 else 0)
@@ -51,23 +66,23 @@ train['third_class'] = train['Pclass'].apply(lambda x : 1 if x == 3 else 0)
 train.drop('Pclass', axis=1, inplace=True)
 train.head()
 
-
 test['first_class'] = test['Pclass'].apply(lambda x : 1 if x == 1 else 0)
 test['second_class'] = test['Pclass'].apply(lambda x : 1 if x == 2 else 0)
 test['third_class'] = test['Pclass'].apply(lambda x : 1 if x == 3 else 0)
 test.drop('Pclass', axis=1, inplace=True)
 test.head()
 
+
 # Splitting the Train Datasets
 X = train.drop('Survived', axis=1)
 y = train['Survived']
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
 
 # Training the Dataset using RandomForestClassifier
 from sklearn.ensemble import RandomForestClassifier
-rfc = RandomForestClassifier()
+rfc = RandomForestClassifier(max_depth=12, min_samples_leaf=3, max_leaf_nodes=10)
 rfc.fit(X_train, y_train)
 
 # Checking the Accuracy Score of the Model
