@@ -1,6 +1,6 @@
 # Atom_titanic
 
-Predicting the Titanic Dataset in Atom IDE.
+Predicting the Titanic Dataset.
 
 Install 'Hydrogen' package for Jupter Kernel support in Atom IDE.
 
