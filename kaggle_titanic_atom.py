@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 
@@ -26,15 +25,15 @@ train.info()
 
 # Filling the missing values of Age column with its mean.
 train_mean = train[['Age']].mean()
-train['Age'] = train['Age'].fillna(train_mean)
+train['Age'] = train[['Age']].fillna(train_mean)
 train.info()
 
 # Doing the same with Test Datasets
-test_mean = test['Age'].mean()
-test['Age'] = test['Age'].fillna(test_mean)
+test_mean = test[['Age']].mean()
+test['Age'] = test[['Age']].fillna(test_mean)
 test.isnull().any()
 
-test['Fare'] = test['Fare'].fillna(test['Fare'].mean())
+test['Fare'] = test[['Fare']].fillna(test[['Fare']].mean())
 test.info()
 
 # Converting Sex from catergorical to numerical
@@ -46,14 +45,18 @@ test.head()
 
 
 # Feature Engineering: Splitting Pclass in 1st class, 2nd Class, and 3rd Class
-def class_sep(data):
-    print(data.values())
+train['first_class'] = train['Pclass'].apply(lambda x : 1 if x == 1 else 0)
+train['second_class'] = train['Pclass'].apply(lambda x : 1 if x == 2 else 0)
+train['third_class'] = train['Pclass'].apply(lambda x : 1 if x == 3 else 0)
+train.drop('Pclass', axis=1, inplace=True)
+train.head()
 
-class_sep(train['Sex'])
-train['1st'] = train['1st']
 
-import matplotlib.pyplot as plt
-plt.hist(data, bins=50)
+test['first_class'] = test['Pclass'].apply(lambda x : 1 if x == 1 else 0)
+test['second_class'] = test['Pclass'].apply(lambda x : 1 if x == 2 else 0)
+test['third_class'] = test['Pclass'].apply(lambda x : 1 if x == 3 else 0)
+test.drop('Pclass', axis=1, inplace=True)
+test.head()
 
 # Splitting the Train Datasets
 X = train.drop('Survived', axis=1)
@@ -64,7 +67,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # Training the Dataset using RandomForestClassifier
 from sklearn.ensemble import RandomForestClassifier
-rfc = RandomForestClassifier(max_depth=20, max_leaf_nodes=20, max_features=7, min_samples_split=10)
+rfc = RandomForestClassifier()
 rfc.fit(X_train, y_train)
 
 # Checking the Accuracy Score of the Model
