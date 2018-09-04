@@ -78,7 +78,7 @@ X = train.drop('Survived', axis=1)
 y = train['Survived']
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 # Training the Dataset using RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
