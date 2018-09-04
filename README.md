@@ -8,7 +8,7 @@ Tasks performed on Titanic Dataset:
 * Data Cleaning
 * Data Pre-Processing
 * Feature Engineering
-* Machine Learning Models applied:
+* Machine Learning Models applied: (Chechout different Branches)
   1. Random Forest
   2. Decision Tree
   3. Support Vector Machine
