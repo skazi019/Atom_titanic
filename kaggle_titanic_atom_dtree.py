@@ -82,7 +82,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 # Training the Dataset using RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
-dt = DecisionTreeClassifier()
+dt = DecisionTreeClassifier(max_leaf_nodes=19)
 dt.fit(X_train, y_train)
 
 # Checking the Accuracy Score of the Model
